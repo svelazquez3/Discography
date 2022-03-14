@@ -1,29 +1,54 @@
-#include <iostream>
-#include <bits/stdc++.h>
+// C++ program that finds the fastest route from one vertices to another. 
+#include <iostream> 
 #include <vector> 
+#include <bits/stdc++.h>
 
-using namespace std; 
+using namespace std;
 
-class Edge{
-  void addEdge(vector<int> adj[], int u, int v); 
-  void printGraph(vector<int> adj[], int V); 
-  // void printEdges(); 
-  private:
-  int totalEdges; // Total number of edges found in graph
-};
-
-void Edge::addEdge(){
-  
-}
-
-void Edge::printGraph(){
-
-  
-}
-
+void addEdge(vector <pair<int, int> > adj[], int u, int v, int wt); 
+void printGraph(vector<pair<int,int> > adj[], int V);
 
 int main()
 {
-  cout << "Testing!"
-  return 0; 
+	int V = 4;
+	vector<pair<int, int> > adj[V];
+	addEdge(adj, 1, 2, 20);
+  addEdge(adj, 2, 3, 30);
+	printGraph(adj, V);
+	return 0;
 }
+
+// To add an edge
+void addEdge(vector <pair<int, int> > adj[], int u,
+									int v, int wt)
+{
+	adj[u].push_back(make_pair(v, wt));
+	adj[v].push_back(make_pair(u, wt));
+}
+
+// Print adjacency list representation to graph
+void printGraph(vector<pair<int,int> > adj[], int V)
+{
+  int start = 1; 
+  int end = 3; 
+  int total = 0; 
+  
+	int v, w; 
+	for (int u = 1; u < V; u++)
+	{
+		cout << "Node " << u << " makes an edge with \n";
+		for (auto it = adj[u].begin(); it!=adj[u].end(); it++)
+		{
+			v = it->first;
+			w = it->second;
+			cout << "\tNode " << v << " with edge weight = "
+				<< w << "\n";
+
+      if(v == start or v == end)
+        total += w; 
+		}
+		cout << "\n";
+	}
+  cout << total; 
+}
+
